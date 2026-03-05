@@ -21,22 +21,26 @@ export default function ProjectCard({ project }) {
       </div>
 
       <div className="btn text-white flex gap-5 py-3">
-        <Link to={Github} target="_blank" className="group relative inline-flex items-center justify-center w-full sm:w-auto px-8 py-2 text-white font-semibold bg-gray-800 rounded-lg overflow-hidden transition-all duration-300 hover:bg-gray-900 shadow-lg hover:shadow-blue-500/30">
-          <span className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+        <Link
+          to={Github || "#"}
+          target={Github ? "_blank" : undefined}
+          onClick={(e) => !Github && e.preventDefault()}
+          className={`group relative inline-flex items-center justify-center w-full sm:w-auto px-8 py-2 text-white font-semibold bg-gray-800 rounded-lg overflow-hidden transition-all duration-300 shadow-lg
+            ${Github ? "hover:bg-gray-900 hover:shadow-blue-500/30 cursor-pointer" : "opacity-50 cursor-not-allowed"}`}
+        >
+          <span className={`absolute top-0 left-0 w-full h-full bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 transition-opacity duration-300 ${Github ? "group-hover:opacity-100" : ""}`}></span>
           <span className="relative flex items-center gap-2"> Github {Giticon}</span>
         </Link>
         <Link
           to={Live || "#"}
-          target="_blank"
+          target={Live ? "_blank" : undefined}
           onClick={(e) => !Live && e.preventDefault()}
-          className={`group relative inline-flex items-center justify-center w-full sm:w-auto px-8 py-1 text-white font-semibold bg-transparent border border-gray-600 rounded-lg overflow-hidden transition-all duration-300 hover:text-white hover:border-blue-500 shadow-lg hover:shadow-purple-500/30
-            ${!Live ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
+          className={`group relative inline-flex items-center justify-center w-full sm:w-auto px-8 py-1 text-white font-semibold bg-transparent border border-gray-600 rounded-lg overflow-hidden transition-all duration-300 shadow-lg
+            ${Live ? "hover:text-white hover:border-blue-500 hover:shadow-purple-500/30 cursor-pointer" : "opacity-50 cursor-not-allowed"}`}
         >
-          <span className="absolute top-0 left-0 w-0 h-full bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-500 ease-out group-hover:w-full"></span>
+          <span className={`absolute top-0 left-0 w-0 h-full bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-500 ease-out ${Live ? "group-hover:w-full" : ""}`}></span>
           <span className="relative flex items-center gap-2">Live {Liveicon}</span>
         </Link>
-
-
       </div>
     </div>
   );
