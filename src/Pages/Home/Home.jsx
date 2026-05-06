@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { FaArrowRight, FaDownload } from 'react-icons/fa';
+import SEO from '../../components/SEO';
 
 export default function Home() {
 
@@ -8,8 +9,13 @@ export default function Home() {
   };
 
   return (
-   
-  <main className='container flex flex-col min-h-[calc(100vh-20rem)] justify-center mx-auto px-4 py-5 md:py-10'>
+   <>
+    <SEO 
+      title="Home" 
+      description="Welcome to the portfolio of Alamgir Khan, a creative Frontend Developer specializing in React and modern web technologies." 
+      keywords="Frontend Developer, React, Portfolio, Alamgir Khan"
+    />
+    <main className='container flex flex-col min-h-[calc(100vh-20rem)] justify-center mx-auto px-4 py-5 md:py-10'>
     <div className="container mx-auto px-4 py-8 text-center z-10">
         <h2 className="text-xl md:text-2xl text-gray-300 mb-2">Hi, I'm</h2>
         <h1 className="text-5xl md:text-7xl font-extrabold my-2">
@@ -48,7 +54,7 @@ export default function Home() {
         </div>
     </div>
   </main>
-  
+  </>
   );
 }
 

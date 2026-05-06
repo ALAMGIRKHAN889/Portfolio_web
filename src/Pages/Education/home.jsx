@@ -22,8 +22,16 @@ const educationData = [
     }
 ];
 
+import SEO from "../../components/SEO";
+
 export default function Education() {
     return (
+        <>
+        <SEO 
+          title="Education" 
+          description="The educational background of Alamgir Khan, including a Bachelor's in Computer Science from FUUAST and web development certifications." 
+          keywords="Education, Computer Science, FUUAST, Web Development Degree"
+        />
         <main className='container flex flex-col min-h-[calc(100vh-10rem)] justify-center mx-auto px-4 py-5 md:py-10'>
 
             <div className="text-center">
@@ -58,6 +66,7 @@ export default function Education() {
                 ))}
             </div>
         </main>
+        </>
     );
 }
 

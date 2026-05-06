@@ -14,9 +14,17 @@ const skillsData = [
 ];
 
 
+import SEO from "../../components/SEO";
+
 export default function Skills() {
     return (
-    <main className='container flex flex-col min-h-[calc(100vh-20rem)] justify-center mx-auto px-4 py-5 md:py-10'>
+        <>
+        <SEO 
+          title="Skills" 
+          description="A comprehensive list of technical skills and technologies Alamgir Khan excels in, including React, Next.js, TypeScript, Tailwind CSS, and more." 
+          keywords="Frontend Skills, React Developer Skills, Technical Expertise, JavaScript, TypeScript"
+        />
+        <main className='container flex flex-col min-h-[calc(100vh-20rem)] justify-center mx-auto px-4 py-5 md:py-10'>
 
             <div className="text-center">
                 <h1 className="text-3xl md:text-4xl font-bold mb-4 2xl:mb-[5%] text-center"> <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500">Skills</span></h1>
@@ -42,6 +50,7 @@ export default function Skills() {
                 ))}
             </section>
         </main>
+        </>
     );
 }
 

@@ -22,12 +22,20 @@ const contactDetails = [
 ];
 
 
+import SEO from '../../components/SEO';
+
 export default function About() {
   const handleShowPDF = () => {
     window.open('/Alamgir CV.pdf', '_blank');
   };
 
   return (
+    <>
+    <SEO 
+      title="About Me" 
+      description="Learn more about Alamgir Khan, a web developer passionate about creating efficient and scalable web solutions using modern frontend technologies." 
+      keywords="About Alamgir Khan, Web Developer Karachi, Frontend Developer Skills"
+    />
     <main className='container flex flex-col min-h-[calc(100vh-20rem)] justify-center mx-auto px-4 py-5 md:py-10'>
         <h1 className="text-3xl md:text-4xl font-bold mb-4 2xl:mb-[5%] text-center"> <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500">About Me</span></h1>
 
@@ -36,7 +44,7 @@ export default function About() {
         <div className="lg:col-span-2 space-y-2">
           
           <div className="relative group">
-              <img className='h-[250px] w-full object-cover object-top rounded-2xl p-2' src="/img/about_1.jpg" alt="about" />
+              <img className='h-[250px] w-full object-cover object-top rounded-2xl p-2' src="/img/about_1.jpg" alt="Alamgir Khan - Web Developer" />
           </div>
             
           <div className="bg-gray-800/50 backdrop-blur-sm border border-blue-500/20 p-6 rounded-lg space-y-4">
@@ -89,6 +97,7 @@ export default function About() {
         </div>
       </div>
     </main>
+    </>
   );
 }
 

@@ -22,6 +22,8 @@ const socialLinks = [
   { name: 'Whatsapp', icon: <FaWhatsapp />, Link: 'https://wa.me/923154572266' },
 ];
 
+import SEO from "../../components/SEO";
+
 export default function Contact() {
   const form = useRef();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -53,6 +55,12 @@ export default function Contact() {
   };
 
   return (
+    <>
+    <SEO 
+      title="Contact" 
+      description="Get in touch with Alamgir Khan for project inquiries, creative collaborations, or professional opportunities. My inbox is always open." 
+      keywords="Contact Alamgir Khan, Hire Frontend Developer, Freelance Web Developer Karachi"
+    />
     <main className='container flex flex-col min-h-[calc(100vh-20rem)] justify-center mx-auto px-4 py-5 md:py-10'>
 
         <h1 className="text-3xl md:text-4xl font-bold mb-4 2xl:mb-[5%] text-center"> <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500">Contact Me</span></h1>
@@ -127,5 +135,6 @@ export default function Contact() {
       </div>
     </div>
     </main>
+    </>
   )
 }
