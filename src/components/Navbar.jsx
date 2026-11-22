@@ -1,39 +1,88 @@
-import { NavLink, Link } from 'react-router-dom'
-import { MdHome, MdPerson, MdSchool, MdCode, MdFolder, MdMail, MdWorkOutline } from 'react-icons/md'
-import { nav, site } from '../data/site'
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { NavLink, Link } from 'react-router-dom';
+import { MdHome, MdPerson, MdSchool, MdCode, MdFolder, MdMail } from 'react-icons/md';
 
-const icons = { '/': <MdHome />, '/about': <MdPerson />, '/education': <MdSchool />, '/skills': <MdCode />, '/projects': <MdFolder />, '/contact': <MdMail />, '/hire-me': <MdWorkOutline /> }
-const short = { '/education': 'Edu', '/projects': 'Work', '/hire-me': 'Hire' }
+const menuItems = [
+  { name: 'Home', link: '/', icon: <MdHome />, short: 'Home' },
+  { name: 'About', link: '/about', icon: <MdPerson />, short: 'About' },
+  { name: 'Education', link: '/education', icon: <MdSchool />, short: 'Edu' },
+  { name: 'Skills', link: '/skills', icon: <MdCode />, short: 'Skills' },
+  { name: 'Projects', link: '/projects', icon: <MdFolder />, short: 'Work' },
+  { name: 'Contact', link: '/contact', icon: <MdMail />, short: 'Contact' },
+];
 
-const topCls = (hire) => ({ isActive }) =>
-  `rounded-full px-3.5 py-2 text-sm font-semibold transition duration-300 ${
-    isActive
-      ? 'bg-gradient-to-r from-brand-purple to-brand-blue text-white shadow-md shadow-brand-purple/30'
-      : hire ? 'border border-brand-cyan/40 text-brand-cyan hover:bg-brand-cyan/10' : 'text-slate-300 hover:bg-white/10 hover:text-white'
-  }`
+const HireMeButton = ({ className = '' }) => (
+  <Link
+    to="/contact"
+    className={`inline-block bg-gradient-to-r from-purple-600 to-blue-500 text-white font-semibold px-5 py-2 rounded-full shadow-lg hover:scale-105 hover:shadow-blue-500/50 transition-all duration-300 ${className}`}
+  >
+    Hire Me
+  </Link>
+);
 
 export default function Navbar() {
-  const [first, last] = site.name.split(' ')
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const on = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', on);
+    return () => window.removeEventListener('scroll', on);
+  }, []);
+
+  const navLinkClasses = ({ isActive }) =>
+    `px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ${isActive
+      ? 'bg-gradient-to-r from-purple-600 to-blue-500 text-white shadow-md'
+      : 'text-gray-300 hover:bg-gray-700/50 hover:text-white'
+    }`;
+
   return (
     <>
-      <header className="fixed inset-x-0 top-3 z-50 px-4">
-        <nav aria-label="Main" className="glass mx-auto flex h-14 max-w-6xl items-center justify-between rounded-full px-5">
-          <Link to="/" className="font-display text-xl font-bold text-white">{first}<span className="text-brand-purple">{last}</span></Link>
-          <ul className="hidden items-center gap-1 lg:flex">
-            {nav.map(([name, to]) => <li key={to}><NavLink to={to} end={to === '/'} className={topCls(to === '/hire-me')}>{name}</NavLink></li>)}
-          </ul>
-        </nav>
-      </header>
+      <motion.nav aria-label="Main" initial={{ y: -80, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.6 }} className="fixed top-4 left-0 right-0 z-50">
+        <div className={`w-[90%] max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-2 backdrop-blur-lg border border-blue-500/30 rounded-full transition-all duration-300 ${scrolled ? 'bg-black/60 shadow-lg shadow-purple-500/20' : 'bg-black/30'}`}>
+          <div className="flex items-center justify-between h-12">
+            <Link to="/" className="flex-shrink-0 text-2xl font-bold text-white">
+              <span className="md:hidden">A<span className="text-purple-400">K</span></span>
+              <span className="hidden md:inline">Alamgir<span className="text-purple-400">Khan</span></span>
+            </Link>
 
-      <nav aria-label="Mobile" className="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-navy-900/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl lg:hidden">
-        <ul className="mx-auto grid max-w-lg grid-cols-7 px-1">
-          {nav.map(([name, to]) => (
-            <li key={to}>
-              <NavLink to={to} end={to === '/'} aria-label={name} className={({ isActive }) => `flex flex-col items-center gap-0.5 py-2 text-[10px] font-semibold transition ${isActive ? 'text-white' : 'text-slate-400'}`}>
+            {/* Desktop menu */}
+            <div className="hidden md:flex items-center space-x-4">
+              {menuItems.map((item) => (
+                <NavLink key={item.name} to={item.link} end={item.link === '/'} className={navLinkClasses}>
+                  {item.name}
+                </NavLink>
+              ))}
+              <HireMeButton />
+            </div>
+
+            {/* Mobile: Hire Me stays in the top bar, navigation moves to the bottom tab bar */}
+            <div className="md:hidden">
+              <HireMeButton className="!px-4 !py-1.5 text-sm" />
+            </div>
+          </div>
+        </div>
+      </motion.nav>
+
+      {/* Mobile bottom tab bar */}
+      <nav aria-label="Mobile" className="md:hidden fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-[#1c1733]/90 backdrop-blur-xl pb-[env(safe-area-inset-bottom)]">
+        <ul className="mx-auto grid max-w-lg grid-cols-6 px-1">
+          {menuItems.map((item) => (
+            <li key={item.name}>
+              <NavLink
+                to={item.link}
+                end={item.link === '/'}
+                aria-label={item.name}
+                className={({ isActive }) => `flex flex-col items-center gap-0.5 py-2 text-[10px] font-semibold transition-colors ${isActive ? 'text-white' : 'text-gray-400'}`}
+              >
                 {({ isActive }) => (
                   <>
-                    <span className={`flex h-7 w-11 items-center justify-center rounded-full text-xl transition ${isActive ? 'bg-gradient-to-r from-brand-purple to-brand-blue shadow-md shadow-brand-purple/40' : ''}`}>{icons[to]}</span>
-                    <span>{short[to] || name}</span>
+                    <span className="relative flex h-7 w-12 items-center justify-center text-xl">
+                      {isActive && (
+                        <motion.span layoutId="mobile-tab-pill" className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600 to-blue-500 shadow-md shadow-purple-500/40" transition={{ type: 'spring', stiffness: 400, damping: 32 }} />
+                      )}
+                      <span className="relative">{item.icon}</span>
+                    </span>
+                    <span>{item.short}</span>
                   </>
                 )}
               </NavLink>
@@ -42,5 +91,5 @@ export default function Navbar() {
         </ul>
       </nav>
     </>
-  )
+  );
 }

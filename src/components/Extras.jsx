@@ -35,7 +35,7 @@ export function WhatsAppFloat() {
       animate={{ scale: 1 }}
       transition={{ delay: 1.2, type: 'spring' }}
       whileHover={{ scale: 1.15 }}
-      className="fixed bottom-5 right-5 z-50 w-14 h-14 rounded-full bg-green-500 text-white text-3xl flex items-center justify-center shadow-lg shadow-green-500/40"
+      className="fixed bottom-[calc(5.5rem+env(safe-area-inset-bottom))] right-4 md:bottom-5 md:right-5 z-50 w-14 h-14 rounded-full bg-green-500 text-white text-3xl flex items-center justify-center shadow-lg shadow-green-500/40"
     >
       <span className="absolute inset-0 rounded-full bg-green-500 animate-ping opacity-30" />
       <FaWhatsapp className="relative" />

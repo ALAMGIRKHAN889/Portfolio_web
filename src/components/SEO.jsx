@@ -1,29 +1,36 @@
-import { Helmet } from 'react-helmet-async'
-import { useLocation } from 'react-router-dom'
-import { site } from '../data/site'
+import { Helmet } from 'react-helmet-async';
 
-export default function SEO({ title, description, keywords }) {
-  const { pathname } = useLocation()
-  const fullTitle = title ? `${title} | ${site.name}` : `${site.name} | ${site.title}`
-  const desc = description || `Portfolio of ${site.name}, ${site.title}. ${site.intro}`
-  const url = `${site.url}${pathname === '/' ? '' : pathname}`
-  const image = `${site.url}/Logo.png`
-  const kw = `${site.name}, Frontend Developer, React Developer, Portfolio${keywords ? `, ${keywords}` : ''}`
+const SEO = ({ title, description, keywords, image, url }) => {
+  const siteTitle = "Alamgir Khan | Portfolio";
+  const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle;
+  const siteDescription = "Portfolio of Alamgir Khan - A Full Stack (MERN) Developer building beautiful, scalable web applications.";
+  const siteKeywords = "Alamgir Khan, Full Stack Developer, MERN Developer, React Developer, Node.js, Portfolio, Web Development, UI/UX";
+  const siteUrl = "https://alamgir-portfolio.vercel.app"; // Update with actual URL if known
+  const siteImage = "/Logo.png";
+
   return (
     <Helmet>
+      {/* Standard metadata tags */}
       <title>{fullTitle}</title>
-      <meta name="description" content={desc} />
-      <meta name="keywords" content={kw} />
-      <link rel="canonical" href={url} />
+      <meta name="description" content={description || siteDescription} />
+      <meta name="keywords" content={keywords ? `${siteKeywords}, ${keywords}` : siteKeywords} />
+      <link rel="canonical" href={url || siteUrl} />
+      
+      {/* Open Graph / Facebook */}
       <meta property="og:type" content="website" />
-      <meta property="og:url" content={url} />
+      <meta property="og:url" content={url || siteUrl} />
       <meta property="og:title" content={fullTitle} />
-      <meta property="og:description" content={desc} />
-      <meta property="og:image" content={image} />
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={fullTitle} />
-      <meta name="twitter:description" content={desc} />
-      <meta name="twitter:image" content={image} />
+      <meta property="og:description" content={description || siteDescription} />
+      <meta property="og:image" content={image || siteImage} />
+
+      {/* Twitter */}
+      <meta property="twitter:card" content="summary_large_image" />
+      <meta property="twitter:url" content={url || siteUrl} />
+      <meta property="twitter:title" content={fullTitle} />
+      <meta property="twitter:description" content={description || siteDescription} />
+      <meta property="twitter:image" content={image || siteImage} />
     </Helmet>
-  )
-}
+  );
+};
+
+export default SEO;

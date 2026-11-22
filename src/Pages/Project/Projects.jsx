@@ -1,68 +1,76 @@
-import { useMemo, useState } from 'react'
-import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa'
-import SEO from '../../components/SEO'
-import { Button, PageHeader, Reveal } from '../../components/ui'
-import { projects } from '../../data/projects'
+import { SlSocialGithub } from "react-icons/sl";
+import { GoArrowRight } from "react-icons/go";
+import ProjectCard from "./ProjectCard";
 
-const backendTags = ['MERN', 'Full Stack', 'Node js', 'Backend', 'Mongoose']
-const kind = (p) => (p.tags.some((t) => backendTags.includes(t)) ? 'Full Stack' : 'Frontend')
-const filters = ['All', 'Frontend', 'Full Stack']
 
-function ProjectCard({ p }) {
-  return (
-    <article className="glass glass-hover flex h-full flex-col overflow-hidden">
-      <div className="aspect-video bg-gradient-to-br from-brand-purple/30 to-brand-blue/30">
-        <img src={p.image} alt={`${p.name} preview`} loading="lazy" decoding="async"
-          className={`h-full w-full ${p.fit === 'contain' ? 'object-contain p-6' : 'object-cover object-top'}`} />
-      </div>
-      <div className="flex flex-1 flex-col p-5">
-        <h2 className="font-display text-lg font-bold text-white">{p.name}</h2>
-        <p className="mt-2 line-clamp-4 flex-1 text-sm text-slate-400">{p.description}</p>
-        <ul className="mt-4 flex flex-wrap gap-2">
-          {p.tags.map((t) => <li key={t} className="rounded-full border border-brand-blue/30 bg-brand-blue/10 px-2.5 py-1 text-xs font-semibold text-brand-cyan">{t}</li>)}
-        </ul>
-        <div className="mt-5 flex gap-3">
-          {p.Github && <Button href={p.Github} target="_blank" rel="noopener noreferrer" variant="ghost" className="flex-1 !px-4 !py-2 text-sm"><FaGithub /> GitHub</Button>}
-          {p.Live && <Button href={p.Live} target="_blank" rel="noopener noreferrer" className="flex-1 !px-4 !py-2 text-sm">Live Demo <FaExternalLinkAlt /></Button>}
-        </div>
-      </div>
-    </article>
-  )
-}
+const projectsData = [
+  { id: 1, logo: '/img/Projects/fee-manager.svg', name: 'The Harvard Academy - Fee Manager', description: 'A tuition fee management system for The Harvard Academy. Track student fee records, manage payments and pending dues, and keep academy finances organized through a clean, mobile-friendly interface.', tags: ['React', 'Node js', 'MongoDB', 'Full Stack'], Giticon: <SlSocialGithub />, Github: '', Liveicon: <GoArrowRight />, Live: 'https://hardward-tuition-fee-fronend.vercel.app/' },
+  { id: 2, logo: '/img/Projects/property-manager.svg', name: 'Property Manager', description: 'A property management platform with secure login for managing properties, tenants and rentals from one dashboard. Built as a full stack application with authentication and a responsive admin interface.', tags: ['React', 'Node js', 'MongoDB', 'Full Stack'], Giticon: <SlSocialGithub />, Github: '', Liveicon: <GoArrowRight />, Live: 'https://property-manager-frontend-seven.vercel.app/login' },
+  { id: 3, logo: '/img/Projects/EduGrow.jpeg', name: 'EduGrow', description: 'EduGrow is a comprehensive livestock management system designed to streamline farm operations. It provides farmers with essential tools for monitoring animal health, tracking daily activities, and managing farm resources efficiently. The platform also offers a marketplace feature for buying and selling livestock, connecting farmers with potential buyers and ensuring a seamless trading experience.', tags: ['MERN', 'JavaScript', 'Tailwind CSS'], Giticon: <SlSocialGithub />, Github: '', Liveicon: <GoArrowRight />, Live: 'https://edu-grow-mu.vercel.app' },
+  { id: 4, logo: '/img/Projects/GrowNex.webp', name: 'Grow Nex — Freelancing Agency', description: 'Grow Nex is a freelancing agency offering web development, graphic design, digital marketing, SEO and video editing.', tags: [ 'JavaScript', 'Tailwind CSS' , 'Backend'], Giticon: <SlSocialGithub />, Github: '', Liveicon: <GoArrowRight />, Live: 'https://grow-nex-web.vercel.app/' },
+  { id: 5, logo: '/img/Projects/pw.png', name: 'Products World – E-commerce Website', description: 'A premium e-commerce platform featuring watches, cosmetics, jewelry, and toys in one place. Designed with a modern luxury UI, it offers product browsing, category-based collections, search functionality, wishlist, and a seamless shopping experience with a focus on quality and elegance.', tags: ['React', 'JavaScript', 'Tailwind CSS','Full Stack'], Giticon: <SlSocialGithub />, Github: '', Liveicon: <GoArrowRight />, Live: 'https://pakistan-world-frontend-abdullah.vercel.app/' },
+  { id: 6, logo: '/img/Projects/finora.jpg', name: 'Finora - Sales & Invoicing Dashboard', description: 'Finora is a modern SaaS sales and invoicing dashboard designed to track billing, collected revenue, and pending payments. It features real-time financial overviews, monthly sales breakdowns, and urgent follow-up tracking for unpaid invoices.', tags: ['Vite', 'TailwindCSS', 'MERN', 'Full Stack'], Giticon: <SlSocialGithub />, Github: '', Live: 'https://finorafrontend.vercel.app/'},
+  { id: 7, logo: '/img/Projects/E-Library.png', name: 'E-Library for uni courses', description: 'Our E-Library provides students with easy access to department-wise and semester-wise course materials in PDF format. Students can browse and download course PDFs, while administrators can efficiently manage the library by adding departments and uploading study materials.', tags: ['Vite', 'TailwindCSS', 'MERN', 'Full Stack'], Giticon: <SlSocialGithub />, Github: 'https://github.com/Alamgir-Khan-315/E-Library-Frontend.git', Liveicon: <GoArrowRight />, Live: 'https://e-library-frontend-cyan.vercel.app/' },
+  { id: 8, logo: '/img/Projects/Aptech_portal_2.png', name: 'Aptech Portal Tools', description: 'A simple and user-friendly portal designed to manage and access Aptech-related information in one place. It provides a clean interface for handling daily tasks and improving the overall workflow.', tags: [ 'JavaScript', 'Tailwind CSS' , 'Backend'], Giticon: <SlSocialGithub />, Github: '', Liveicon: <GoArrowRight />, Live: 'https://aptech-portal.vercel.app/' },
+  { id: 9, logo: '/img/Projects/cleaner.png', name: 'Attendance Sheet Cleaner', description: 'A simple web-based tool to clean and simplify Aptech attendance Excel reports automatically. Upload your Excel file, process it with predefined formatting and column-cleaning rules, preview the result, and download the final .xlsx file.', tags: [ 'JavaScript', 'Tailwind CSS' , 'Backend'], Giticon: <SlSocialGithub />, Github: '', Liveicon: <GoArrowRight />, Live: 'https://aptech-attandance-report-cleaning.vercel.app/' },
+  { id: 10, logo: '/img/Projects/zarqaa circle icon.png', name: 'Zarqaa Jewelry', description: 'A backend uses Mongoose to connect to a MongoDB Atlas cluster, providing a cloud-hosted, scalable database. This setup simplifies data management and ensures high availability for your application.', tags: ['React', 'Array of objects', 'Context Api'], Giticon: <SlSocialGithub />, Github: '', Liveicon: <GoArrowRight />, Live: 'https://zarqaa-jewelry-mern.vercel.app/' },
+  { id: 12, logo: '/img/Projects/AquaFlow.png', name: 'Aqua Flow', description: 'Aquaflow delivers pure, refreshing water directly to your doorstep with a focus on quality, speed, and sustainability.', tags: ['Vite app', 'TailwindCSS', 'JavaScript', 'Cart'], Giticon: <SlSocialGithub />, Github: 'https://github.com/Alamgir-Khan-315/AquaFlow.git', Liveicon: <GoArrowRight />, Live: 'https://aqua-flow-pearl.vercel.app/' },
+  { id: 94, logo: '/img/Projects/rock-paper-scissors.png', name: 'Rock Paper Scissors', description: 'A simple interactive game where players choose rock, paper, or scissors to compete against the computer, with instant results and score tracking.', tags: ['HTML', 'CSS', 'JavaScript'], Giticon: <SlSocialGithub />, Github: 'https://github.com/Alamgir-Khan-315/Rock-Paper-Scissor.git', Liveicon: <GoArrowRight />, Live: 'https://rock-paper-scissor-sigma-one.vercel.app/' },
+  { id: 95, logo: '/img/Projects/favicon.svg', name: 'Molbie App', description: 'This mobile web app provides a seamless and intuitive shopping experience. It features a powerful **search and filtering system** that lets users quickly find products by name, category, or price range. The **integrated cart system** allows for easy adding, removing, and updating of items, ensuring a smooth and efficient checkout process.', tags: ['Vite app', 'TailwindCSS', 'JavaScript', 'Cart'], Giticon: <SlSocialGithub />, Github: 'https://github.com/Alamgir-Khan-315/Ak-Mobile.git', Liveicon: <GoArrowRight />, Live: 'https://ak-mobile.vercel.app/' },
+  { id: 96, logo: '/img/Projects/Company.png', name: 'Company software', description: 'A responsive, user-friendly SaaS dashboard built with modern frontend technologies, featuring real-time data visualization, dynamic forms, and smooth user interactions. Designed to deliver a seamless experience across devices with an intuitive and polished UI.', tags: ['React js', 'TailwindCSS', 'Frontend', 'Vite'], Giticon: <SlSocialGithub />, Github: 'https://github.com/Alamgir-Khan-315/Company_Web-S-D-.git', Liveicon: <GoArrowRight />, Live: 'https://company-web-s-d.vercel.app/' },
+  { id: 97, logo: '/img/Projects/Logo.png', name: 'Todo App', description: 'A modern, responsive to-do list app with task completion tracking, animated checkmarks, and real-time task counters. Built with React and Tailwind CSS for a clean, mobile-friendly interface.', tags: ['HTML', 'TailwindCSS', 'JavaScript'], Giticon: <SlSocialGithub />, Github: 'https://github.com/Alamgir-Khan-315/Todo-App.git', Liveicon: <GoArrowRight />, Live: 'https://todo-app-tau-wine-11.vercel.app/' },
+  { id: 98, logo: '/img/Projects/log.jpeg', name: 'Log in mern', description: 'A MERN stack login system with a dashboard provides a complete user authentication solution. Users can register, log in, and securely access a personalized dashboard. The backend, built with Node.js and Express, handles user data storage in MongoDB and manages authentication. The frontend, created with React, offers a dynamic and responsive user interface for a seamless user experience.', tags: ['React js', 'TailwindCSS', 'Mongoose', 'Node js'], Giticon: <SlSocialGithub />, Github: 'https://github.com/Alamgir-Khan-315/Log-In--mern.git', Liveicon: <GoArrowRight />, Live: 'https://log-in-mern.vercel.app/' },
+  { id: 99, logo: '/img/Projects/log.jpeg', name: 'Full Stack App', description: 'A MERN stack application is a full-stack JavaScript application built with **M**ongoDB, **E**xpress, **R**eact, and **N**ode.js. It uses a single language (JavaScript) for both the frontend and backend, making it a highly efficient and popular choice for web development.', tags: ['React js', 'TailwindCSS', 'Mongoose', 'Node js'], Giticon: <SlSocialGithub />, Github: 'https://github.com/Alamgir-Khan-315/Full-Stack-App.git', Liveicon: <GoArrowRight />, Live: 'https://full-stack-app-frontend-beta.vercel.app/' },
+  { id: 100, logo: '/img/Projects/Mongoose.jpeg', name: 'Backend Mongoose Atlas', description: 'A backend uses Mongoose to connect to a MongoDB Atlas cluster, providing a cloud-hosted, scalable database. This setup simplifies data management and ensures high availability for your application.', tags: ['React', 'Node js', 'Express js', 'Mongoose'], Giticon: <SlSocialGithub />, Github: 'https://github.com/ALAMGIRKHAN889/Back-end-mongoose-atlas.git', Liveicon: <GoArrowRight />, Live: 'https://back-end-mongoose-nine.vercel.app/' },
+];
+
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import SEO from "../../components/SEO";
+import { PageTitle } from "../../components/Motion";
+
+const filters = ['All', 'Full Stack', 'MERN', 'Frontend'];
+const matches = (p, f) => {
+  if (f === 'All') return true;
+  if (f === 'Full Stack') return p.tags.some((t) => ['Full Stack', 'Backend', 'Node js'].includes(t));
+  if (f === 'MERN') return p.tags.some((t) => ['MERN', 'Mongoose', 'Node js'].includes(t));
+  return !p.tags.some((t) => ['Full Stack', 'Backend', 'Node js', 'MERN', 'Mongoose'].includes(t));
+};
 
 export default function Projects() {
-  const [filter, setFilter] = useState('All')
-  const [query, setQuery] = useState('')
-  const shown = useMemo(() => {
-    const q = query.trim().toLowerCase()
-    return projects.filter((p) => (filter === 'All' || kind(p) === filter) && (!q || `${p.name} ${p.tags.join(' ')}`.toLowerCase().includes(q)))
-  }, [filter, query])
+  const [active, setActive] = useState('All');
+  const list = [...projectsData].sort((a, b) => a.id - b.id).filter((p) => matches(p, active));
 
   return (
     <>
-      <SEO title="Projects" description="Projects by Alamgir Khan: MERN stack apps, e-commerce sites, dashboards and tools built with React and Tailwind CSS." keywords="MERN Stack Projects, React Apps Portfolio" />
-      <PageHeader title="Projects" intro="Hands-on work and real-world applications I have built." />
-      <div className="mb-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
-        <div role="group" aria-label="Filter projects" className="flex gap-2">
+      <SEO
+        title="Projects"
+        description="Projects by Alamgir Khan: fee management, property management, e-commerce, dashboards and more built with the MERN stack."
+        keywords="MERN Stack Projects, Full Stack Developer Projects, React Apps Portfolio"
+      />
+      <section className="container flex flex-col justify-center mx-auto px-4 py-5 md:py-10">
+        <PageTitle sub="Real-world applications, from frontend interfaces to full stack systems.">Built with Code</PageTitle>
+
+        <div className="flex flex-wrap justify-center gap-3 mb-10">
           {filters.map((f) => (
-            <button key={f} type="button" aria-pressed={filter === f} onClick={() => setFilter(f)}
-              className={`rounded-full px-4 py-2 text-sm font-semibold transition ${filter === f ? 'bg-gradient-to-r from-brand-purple to-brand-blue text-white' : 'border border-white/15 text-slate-300 hover:text-white'}`}>{f}</button>
+            <button key={f} onClick={() => setActive(f)}
+              className={`relative px-5 py-2 rounded-full text-sm font-semibold transition-colors ${active === f ? 'text-white' : 'text-gray-300 glass hover:text-white'}`}>
+              {active === f && (
+                <motion.span layoutId="pill" className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600 to-blue-500" />
+              )}
+              <span className="relative">{f}</span>
+            </button>
           ))}
         </div>
-        <label className="w-full sm:w-64"><span className="sr-only">Search projects</span>
-          <input type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search by name or tech" className="field" />
-        </label>
-      </div>
-      {shown.length === 0 ? (
-        <div className="glass p-10 text-center">
-          <p className="font-semibold text-white">No projects match your search.</p>
-          <Button variant="ghost" className="mt-4" onClick={() => { setFilter('All'); setQuery('') }}>Clear filters</Button>
-        </div>
-      ) : (
-        <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {shown.map((p) => <li key={p.name}><Reveal className="h-full"><ProjectCard p={p} /></Reveal></li>)}
-        </ul>
-      )}
+
+        <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <AnimatePresence mode="popLayout">
+            {list.map((project, i) => (
+              <ProjectCard key={project.id} project={project} index={i} />
+            ))}
+          </AnimatePresence>
+        </motion.div>
+      </section>
     </>
-  )
+  );
 }
