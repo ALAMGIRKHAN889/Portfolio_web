@@ -1,8 +1,17 @@
-# React + Vite
+# Alamgir Khan, Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React 18 + Vite + Tailwind CSS + React Router.
 
-Currently, two official plugins are available:
+## Run
+```
+npm install
+npm run dev      # development
+npm run lint
+npm run build    # production build to /dist
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Where to edit content
+- `src/data/site.jsx`: name, bio, contact, socials, availability, services, experience, achievements
+- `src/data/projects.js`: projects (leave `Github` or `Live` empty to hide that button)
+- `src/data/skills.jsx`: skills and progress levels
+- `src/data/education.js`: education and certifications

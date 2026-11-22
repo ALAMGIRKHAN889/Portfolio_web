@@ -1,100 +1,66 @@
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { SlSocialGithub } from "react-icons/sl";
-import { TiSocialLinkedin } from "react-icons/ti";
-import { FaInstagram, FaWhatsapp, FaDownload } from "react-icons/fa";
-import { MdOutlineLocationOn, MdAttachEmail } from "react-icons/md";
-import { FaPhone } from "react-icons/fa6";
-import SEO from '../../components/SEO';
-import { PageTitle, Reveal } from '../../components/Motion';
-
-const socialLinks = [
-  { name: 'Email', icon: <MdAttachEmail />, href: 'mailto:alamgirkhqwer@gmail.com?subject=Hello&body=I%20want%20to%20contact%20you' },
-  { name: 'Instagram', icon: <FaInstagram />, href: 'https://www.instagram.com/alamgir_khan_315?igsh=MWUxejMyZ3doazJmcg==' },
-  { name: 'Github', icon: <SlSocialGithub />, href: 'https://github.com/Alamgir-Khan-315' },
-  { name: 'LinkedIn', icon: <TiSocialLinkedin />, href: 'https://www.linkedin.com/in/alamgir-khan-248b89259/' },
-  { name: 'Whatsapp', icon: <FaWhatsapp />, href: 'https://wa.me/923154572266' }
-];
-
-const contactDetails = [
-  { icon: <MdAttachEmail />, text: 'alamgirkhqwer@gmail.com', href: 'mailto:alamgirkhqwer@gmail.com' },
-  { icon: <FaPhone />, text: '+92 315 4572266', href: 'tel:+923154572266' },
-  { icon: <FaWhatsapp />, text: 'WhatsApp: 03154572266', href: 'https://wa.me/923154572266' },
-  { icon: <MdOutlineLocationOn />, text: 'Landhi, Karachi.' }
-];
+import { MdEmail, MdPhone, MdLocationOn, MdLanguage } from 'react-icons/md'
+import { FaDownload } from 'react-icons/fa'
+import SEO from '../../components/SEO'
+import { Button, PageHeader, Reveal } from '../../components/ui'
+import { site, socials } from '../../data/site'
+import { projects } from '../../data/projects'
+import { skills } from '../../data/skills'
 
 export default function About() {
-  const handleShowPDF = () => window.open('/Alamgir CV.pdf', '_blank');
-
+  const details = [[<MdEmail key="e" />, site.email, `mailto:${site.email}`], [<MdPhone key="p" />, site.phone, `tel:${site.phone.replace(/\s/g, '')}`], [<MdLocationOn key="l" />, site.location], [<MdLanguage key="g" />, site.languages]]
+  const stats = [[projects.length, 'Projects built'], [projects.filter((p) => p.Live).length, 'Live demos'], [skills.length, 'Technologies']]
   return (
     <>
-      <SEO
-        title="About Me"
-        description="Learn more about Alamgir Khan, a Full Stack Developer passionate about building efficient and scalable web solutions with the MERN stack."
-        keywords="About Alamgir Khan, Full Stack Developer Karachi, MERN Developer"
-      />
-      <section className="container flex flex-col justify-center mx-auto px-4 py-5 md:py-10">
-        <PageTitle>About Me</PageTitle>
-
-        <div className="grid lg:grid-cols-5 gap-10 lg:gap-16 items-start">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7 }}
-            className="lg:col-span-2 space-y-4"
-          >
-            <div className="relative group">
-              <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-purple-600 to-blue-500 opacity-60 blur group-hover:opacity-100 transition duration-500" />
-              <img className="relative h-[280px] w-full object-cover object-top rounded-2xl" src="/img/about_1.jpg" alt="Alamgir Khan - Full Stack Developer" />
-            </div>
-
-            <div className="glass p-6 rounded-2xl space-y-4">
-              {contactDetails.map((d) => {
-                const Row = d.href ? 'a' : 'div';
-                return (
-                  <Row key={d.text} href={d.href} target={d.href?.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer"
-                    className="flex items-center gap-4 text-gray-300 hover:text-white hover:translate-x-1 transition-all">
-                    <div className="text-blue-400 text-2xl">{d.icon}</div>
-                    <span>{d.text}</span>
-                  </Row>
-                );
-              })}
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.1 }}
-            className="lg:col-span-3 text-center lg:text-left"
-          >
-            <h2 className="text-2xl md:text-3xl font-bold text-blue-400 mb-4">Alamgir Khan - Full Stack Developer</h2>
-            <p className="text-gray-300 mb-4 text-justify leading-relaxed">
-              Deeply curious about technology, I build complete web applications from the database to the
-              user interface. On the frontend I craft responsive, animated interfaces with React, Tailwind CSS
-              and modern JavaScript. On the backend I design REST APIs with Node.js and Express, handle
-              authentication, and model data with MongoDB.
-            </p>
-            <p className="text-gray-300 mb-8 text-justify leading-relaxed">
-              From fee management and property management systems to e-commerce stores and dashboards,
-              I enjoy solving real-world problems with clean, scalable and user-friendly solutions,
-              and I collaborate well with teams.
-            </p>
-
-            <div className="mb-10 flex flex-wrap justify-center lg:justify-start items-center gap-4">
-              {socialLinks.map((link, i) => (
-                <motion.a key={link.name} href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.name}
-                  initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.4 + i * 0.08 }}
-                  whileHover={{ scale: 1.2, rotate: 8 }}
-                  className="p-3 text-2xl rounded-full glass text-gray-300 hover:text-white hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-600/30 transition-colors">
-                  {link.icon}
-                </motion.a>
+      <SEO title="About" description={`Learn more about ${site.name}, a ${site.title} building efficient and scalable web solutions.`} keywords="About Alamgir Khan, Web Developer Karachi" />
+      <PageHeader title="About Me" intro={`${site.name} · ${site.title}`} />
+      <div className="grid gap-10 lg:grid-cols-5">
+        <Reveal className="lg:col-span-2">
+          <div className="glass p-5">
+            <img src={site.photo} alt={`${site.name}, ${site.title}`} loading="lazy" className="h-72 w-full rounded-xl object-cover object-top" />
+            <ul className="mt-5 space-y-3">
+              {details.map(([icon, text, href]) => (
+                <li key={text} className="flex items-center gap-3 text-slate-300">
+                  <span className="text-xl text-brand-cyan">{icon}</span>
+                  {href ? <a href={href} className="hover:text-white">{text}</a> : text}
+                </li>
               ))}
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Link to="/contact" className="btn-primary">Contact me</Link>
-              <button onClick={handleShowPDF} className="btn-outline">Download CV <FaDownload /></button>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+            </ul>
+            <ul className="mt-5 flex gap-3">
+              {socials.map((s) => (
+                <li key={s.name}><a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.name} className="block rounded-full border border-white/10 bg-white/5 p-2.5 text-lg transition hover:border-brand-cyan/50 hover:text-white">{s.icon}</a></li>
+              ))}
+            </ul>
+          </div>
+        </Reveal>
+        <Reveal className="lg:col-span-3">
+          <h2 className="font-display text-2xl font-bold text-white">Hi, I&apos;m {site.name}</h2>
+          <p className="mt-4 leading-relaxed text-slate-300">{site.bio}</p>
+          <dl className="mt-8 grid grid-cols-3 gap-4">
+            {stats.map(([n, label]) => (
+              <div key={label} className="glass p-4 text-center">
+                <dd className="grad-text font-display text-3xl font-extrabold">{n}</dd>
+                <dt className="mt-1 text-xs text-slate-400">{label}</dt>
+              </div>
+            ))}
+          </dl>
+          {site.experience.length > 0 && (
+            <section className="mt-10"><h3 className="mb-4 font-display text-xl font-bold text-white">Experience</h3>
+              <div className="space-y-4">{site.experience.map((x) => (
+                <div key={x.role + x.date} className="glass p-5"><p className="text-sm text-brand-cyan">{x.date}</p><p className="font-bold text-white">{x.role} · {x.company}</p><p className="mt-1 text-sm text-slate-400">{x.description}</p></div>
+              ))}</div>
+            </section>
+          )}
+          {site.achievements.length > 0 && (
+            <section className="mt-10"><h3 className="mb-4 font-display text-xl font-bold text-white">Achievements</h3>
+              <ul className="list-disc space-y-2 pl-5">{site.achievements.map((a) => <li key={a}>{a}</li>)}</ul>
+            </section>
+          )}
+          <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+            <Button to="/contact">Contact Me</Button>
+            <Button href={site.cv} download variant="ghost">Download CV <FaDownload /></Button>
+          </div>
+        </Reveal>
+      </div>
     </>
-  );
+  )
 }
