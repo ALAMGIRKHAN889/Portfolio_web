@@ -1,72 +1,55 @@
+import { motion } from 'framer-motion';
 import { FaGraduationCap } from 'react-icons/fa';
+import SEO from "../../components/SEO";
+import { PageTitle } from '../../components/Motion';
 
-// Placeholder data for education history, sorted chronologically
 const educationData = [
-       {
-        degree: 'Bachelor in Computer Science',
-        institution: 'FUUAST University',
-        date: '2021 - 2025',
-        description: 'Focused on software development, data structures, and algorithms. Completed a final year project on a full-stack web application.'
-    }, 
-    {
-        degree: 'Web Development',
-        institution: 'Memon Institute',
-        date: '2021',
-        description: 'An intensive program covering modern frontend technologies like React, Next.js, and advanced CSS techniques.'
-    },
-    {
-        degree: 'High School Diploma',
-        institution: 'Emerson College',
-        date: '2018 - 2020',
-        description: 'Specialized in science and mathematics, which built a strong foundation for my technical studies.'
-    }
+  { degree: 'Bachelor in Computer Science', institution: 'FUUAST University', date: '2021 - 2025', description: 'Focused on software development, data structures, and algorithms. Completed a final year project on a full-stack web application.' },
+  { degree: 'Web Development', institution: 'Memon Institute', date: '2021', description: 'An intensive program covering modern frontend technologies like React, Next.js, and advanced CSS techniques.' },
+  { degree: 'High School Diploma', institution: 'Emerson College', date: '2018 - 2020', description: 'Specialized in science and mathematics, which built a strong foundation for my technical studies.' },
 ];
 
-import SEO from "../../components/SEO";
-
 export default function Education() {
-    return (
-        <>
-        <SEO 
-          title="Education" 
-          description="The educational background of Alamgir Khan, including a Bachelor's in Computer Science from FUUAST and web development certifications." 
-          keywords="Education, Computer Science, FUUAST, Web Development Degree"
-        />
-        <main className='container flex flex-col min-h-[calc(100vh-10rem)] justify-center mx-auto px-4 py-5 md:py-10'>
+  return (
+    <>
+      <SEO
+        title="Education"
+        description="Educational background of Alamgir Khan, including a Bachelor's in Computer Science from FUUAST and web development training."
+        keywords="Education, Computer Science, FUUAST, Web Development"
+      />
+      <section className="container flex flex-col justify-center mx-auto px-4 py-5 md:py-10">
+        <PageTitle sub="My academic journey and the qualifications that have shaped my skills.">Education</PageTitle>
 
-            <div className="text-center">
-                <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center"> <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500">Education</span></h1>
-                <p className='max-w-3xl mx-auto text-gray-400 mt-4 mb-12 md:mb-20 text-lg'>
-                    My academic journey and the qualifications that have shaped my skills and expertise.
-                </p>
-            </div>
-
-
-            <div className="relative max-w-3xl mx-auto">
-                {/* Vertical line */}
-                <div className="absolute top-0 h-full w-0.5 bg-blue-500/30 left-4 md:left-1/2 md:-translate-x-1/2"></div>
-
-                {educationData.map((item, index) => (
-                    <div key={index} className="relative pl-12 md:pl-0 mb-12">
-                        {/* Dot */}
-                        <div className="absolute top-0 left-4 md:left-1/2 w-8 h-8 bg-[#0a0a0a] border-4 border-blue-500 rounded-full -translate-x-1/2 flex items-center justify-center">
-                            <FaGraduationCap className="text-blue-300" />
-                        </div>
-
-
-                        <div className={`relative md:w-1/2 p-5 rounded-xl bg-gray-500/10 backdrop-blur-sm border border-blue-500/20 ${index % 2 === 0 ? 'md:ml-[54%]  md:pl-10' : 'md:-ml-[4%] md:text-right md:pr-10'}`}>
-                            {/* Arrow */}
-                            <div className={`absolute top-4 h-0 w-0 border-t-8 border-b-8 hidden md:block ${index % 2 === 0 ? 'border-r-8 border-r-blue-500/20 border-l-0 border-t-transparent border-b-transparent -left-2' : 'border-l-8 border-l-blue-500/20 border-r-0 border-t-transparent border-b-transparent -right-2'}`}></div>
-                            <p className="text-sm font-semibold text-blue-400 mb-1">{item.date}</p>
-                            <h3 className="text-xl font-bold text-white mb-2">{item.degree}</h3>
-                            <h4 className="text-md font-medium text-gray-300 mb-3">{item.institution}</h4>
-                            <p className="text-gray-400 text-sm">{item.description}</p>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </main>
-        </>
-    );
+        <div className="relative max-w-3xl mx-auto">
+          <motion.div
+            initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ duration: 1.2 }}
+            className="absolute top-0 h-full w-0.5 origin-top bg-gradient-to-b from-purple-500 to-blue-500 left-4 md:left-1/2 md:-translate-x-1/2"
+          />
+          {educationData.map((item, index) => {
+            const left = index % 2 !== 0;
+            return (
+              <div key={index} className="relative pl-12 md:pl-0 mb-12">
+                <motion.div
+                  initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: true }} transition={{ type: 'spring', delay: 0.2 }}
+                  className="absolute top-0 left-4 md:left-1/2 w-9 h-9 bg-[#292345] border-4 border-blue-500 rounded-full -translate-x-1/2 flex items-center justify-center z-10 shadow-lg shadow-blue-500/40"
+                >
+                  <FaGraduationCap className="text-blue-300 text-sm" />
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, x: left ? -60 : 60 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: '-50px' }}
+                  transition={{ duration: 0.6 }} whileHover={{ scale: 1.03 }}
+                  className={`glass relative md:w-[46%] p-5 rounded-2xl hover:border-blue-400/60 hover:shadow-lg hover:shadow-blue-500/20 transition-colors ${left ? 'md:mr-auto md:text-right' : 'md:ml-auto'}`}
+                >
+                  <p className="text-sm font-semibold text-blue-400 mb-1">{item.date}</p>
+                  <h3 className="text-xl font-bold text-white mb-2">{item.degree}</h3>
+                  <h4 className="font-medium text-gray-300 mb-3">{item.institution}</h4>
+                  <p className="text-gray-400 text-sm">{item.description}</p>
+                </motion.div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+    </>
+  );
 }
-

@@ -1,56 +1,91 @@
-import { IoLogoHtml5, IoLogoCss3, IoLogoJavascript } from "react-icons/io5";
+import { motion } from "framer-motion";
+import { IoLogoHtml5, IoLogoCss3, IoLogoJavascript, IoLogoNodejs } from "react-icons/io5";
 import { GrReactjs } from "react-icons/gr";
-import { SiNextdotjs, SiTailwindcss, SiTypescript } from "react-icons/si";
+import { SiNextdotjs, SiTailwindcss, SiTypescript, SiMongodb, SiExpress, SiGit, SiPostman, SiJsonwebtokens } from "react-icons/si";
+import { TbApi } from "react-icons/tb";
+import SEO from "../../components/SEO";
+import { PageTitle } from "../../components/Motion";
 
-
-const skillsData = [
-    { name: 'HTML', icon: <IoLogoHtml5 />, link: 'https://developer.mozilla.org/en-US/docs/Web/HTML' },
-    { name: 'CSS', icon: <IoLogoCss3 />, link: 'https://developer.mozilla.org/en-US/docs/Web/CSS' },
-    { name: 'JavaScript', icon: <IoLogoJavascript />, link: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript' },
-    { name: 'TypeScript', icon: <SiTypescript />, link: 'https://www.typescriptlang.org/docs/' },
-    { name: 'Tailwind CSS', icon: <SiTailwindcss />, link: 'https://tailwindcss.com/docs/installation' },
-    { name: 'React.js', icon: <GrReactjs />, link: 'https://react.dev/' },
-    { name: 'Next.js', icon: <SiNextdotjs />, link: 'https://nextjs.org/docs' }
+const groups = [
+  {
+    title: 'Frontend',
+    skills: [
+      { name: 'HTML', icon: <IoLogoHtml5 />, link: 'https://developer.mozilla.org/en-US/docs/Web/HTML' },
+      { name: 'CSS', icon: <IoLogoCss3 />, link: 'https://developer.mozilla.org/en-US/docs/Web/CSS' },
+      { name: 'JavaScript', icon: <IoLogoJavascript />, link: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript' },
+      { name: 'TypeScript', icon: <SiTypescript />, link: 'https://www.typescriptlang.org/docs/' },
+      { name: 'Tailwind CSS', icon: <SiTailwindcss />, link: 'https://tailwindcss.com/docs/installation' },
+      { name: 'React.js', icon: <GrReactjs />, link: 'https://react.dev/' },
+      { name: 'Next.js', icon: <SiNextdotjs />, link: 'https://nextjs.org/docs' },
+    ],
+  },
+  {
+    title: 'Backend & Database',
+    skills: [
+      { name: 'Node.js', icon: <IoLogoNodejs />, link: 'https://nodejs.org/en/docs' },
+      { name: 'Express.js', icon: <SiExpress />, link: 'https://expressjs.com/' },
+      { name: 'MongoDB', icon: <SiMongodb />, link: 'https://www.mongodb.com/docs/' },
+      { name: 'REST APIs', icon: <TbApi />, link: 'https://developer.mozilla.org/en-US/docs/Glossary/REST' },
+      { name: 'JWT Auth', icon: <SiJsonwebtokens />, link: 'https://jwt.io/introduction' },
+    ],
+  },
+  {
+    title: 'Tools',
+    skills: [
+      { name: 'Git', icon: <SiGit />, link: 'https://git-scm.com/doc' },
+      { name: 'Postman', icon: <SiPostman />, link: 'https://learning.postman.com/' },
+    ],
+  },
 ];
 
-
-import SEO from "../../components/SEO";
+const all = groups.flatMap((g) => g.skills);
 
 export default function Skills() {
-    return (
-        <>
-        <SEO 
-          title="Skills" 
-          description="A comprehensive list of technical skills and technologies Alamgir Khan excels in, including React, Next.js, TypeScript, Tailwind CSS, and more." 
-          keywords="Frontend Skills, React Developer Skills, Technical Expertise, JavaScript, TypeScript"
-        />
-        <main className='container flex flex-col min-h-[calc(100vh-20rem)] justify-center mx-auto px-4 py-5 md:py-10'>
+  return (
+    <>
+      <SEO
+        title="Skills"
+        description="Technical skills of Alamgir Khan: React, Next.js, TypeScript, Tailwind CSS, Node.js, Express and MongoDB."
+        keywords="Full Stack Skills, MERN Skills, React, Node.js, MongoDB, Express"
+      />
+      <section className="container flex flex-col justify-center mx-auto px-4 py-5 md:py-10">
+        <PageTitle sub="Frontend to backend: the tools and technologies I use to build complete products.">Skills</PageTitle>
 
-            <div className="text-center">
-                <h1 className="text-3xl md:text-4xl font-bold mb-4 2xl:mb-[5%] text-center"> <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500">Skills</span></h1>
-                <p className='max-w-3xl mx-auto text-gray-400 mt-4 mb-12 md:mb-16 text-lg'>
-                    I excel in using modern technologies to deliver high-quality results. Here are the tools and technologies I work with.
-                </p>
+        <div className="overflow-hidden mb-14 [mask-image:linear-gradient(90deg,transparent,#000_10%,#000_90%,transparent)]">
+          <div className="marquee flex w-max gap-4">
+            {[...all, ...all].map((s, i) => (
+              <div key={i} className="glass flex items-center gap-2 px-5 py-2 rounded-full text-gray-200 whitespace-nowrap">
+                <span className="text-blue-400 text-xl">{s.icon}</span>{s.name}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {groups.map((g) => (
+          <div key={g.title} className="mb-12">
+            <motion.h2
+              initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
+              className="text-xl md:text-2xl font-bold text-blue-400 mb-5 flex items-center gap-3"
+            >
+              <span className="h-1 w-8 rounded bg-gradient-to-r from-purple-500 to-blue-500" /> {g.title}
+            </motion.h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
+              {g.skills.map((skill, i) => (
+                <motion.a
+                  key={skill.name} href={skill.link} target="_blank" rel="noopener noreferrer"
+                  initial={{ opacity: 0, y: 30, scale: 0.9 }} whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true }} transition={{ delay: i * 0.06 }}
+                  whileHover={{ y: -8, rotate: -1 }}
+                  className="group glass flex flex-col items-center justify-center gap-4 p-6 rounded-2xl hover:border-blue-400 hover:shadow-lg hover:shadow-blue-500/20 transition-colors"
+                >
+                  <div className="text-5xl md:text-6xl text-gray-300 group-hover:text-blue-400 group-hover:scale-110 transition-all duration-300">{skill.icon}</div>
+                  <p className="font-semibold text-white text-center">{skill.name}</p>
+                </motion.a>
+              ))}
             </div>
-
-            <section className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 md:gap-8'>
-                {skillsData.map((skill, i) => (
-                    <a
-                        key={i}
-                        href={skill.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className='group flex flex-col items-center justify-center gap-4 p-6 rounded-xl bg-gray-500/10 backdrop-blur-sm border border-blue-500/20 transition-all duration-300 ease-in-out hover:-translate-y-2 hover:border-blue-400 hover:shadow-lg hover:shadow-blue-500/20'
-                    >
-                        <div className='text-5xl md:text-6xl text-gray-300 transition-colors duration-300 group-hover:text-blue-400'>
-                            {skill.icon}
-                        </div>
-                        <p className='font-semibold text-white text-center'>{skill.name}</p>
-                    </a>
-                ))}
-            </section>
-        </main>
-        </>
-    );
+          </div>
+        ))}
+      </section>
+    </>
+  );
 }
-

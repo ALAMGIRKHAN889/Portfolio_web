@@ -1,60 +1,67 @@
 import { Link } from 'react-router-dom';
-import { FaArrowRight, FaDownload } from 'react-icons/fa';
+import { motion } from 'framer-motion';
+import { FaArrowRight, FaDownload, FaWhatsapp } from 'react-icons/fa';
 import SEO from '../../components/SEO';
+import Typewriter from '../../components/Typewriter';
+import { Reveal } from '../../components/Motion';
+
+const stats = [
+  { n: '18+', l: 'Projects Built' },
+  { n: 'MERN', l: 'Full Stack' },
+  { n: '100%', l: 'Responsive UI' },
+];
+
+const container = { hidden: {}, show: { transition: { staggerChildren: 0.15 } } };
+const item = { hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0, transition: { duration: 0.6 } } };
 
 export default function Home() {
-
-  const handleShowPDF = () => {
-    window.open('/Alamgir CV.pdf', '_blank');
-  };
+  const handleShowPDF = () => window.open('/Alamgir CV.pdf', '_blank');
 
   return (
     <>
       <SEO
         title="Home"
-        description="Welcome to the portfolio of Alamgir Khan, a creative Frontend Developer specializing in React and modern web technologies."
-        keywords="Frontend Developer, React, Portfolio, Alamgir Khan"
+        description="Portfolio of Alamgir Khan, a Full Stack Developer specializing in MERN stack (MongoDB, Express, React, Node.js)."
+        keywords="Full Stack Developer, MERN, React, Node.js, Portfolio, Alamgir Khan"
       />
-      <main className='container flex flex-col min-h-[calc(100vh-20rem)] justify-center mx-auto px-4 py-5 md:py-10'>
-        <div className="container mx-auto px-4 py-8 text-center z-10">
-          <h2 className="text-xl md:text-2xl text-gray-300 mb-2">Hi, I'm</h2>
-          <h1 className="text-5xl md:text-7xl font-extrabold my-2">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500">
-              Alamgir Khan
-            </span>
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-300 mb-6">
-            Frontend Web Developer
-          </p>
-          <p className="max-w-2xl mx-auto text-gray-400 mb-10">
-            I build beautiful and responsive web applications. Passionate about
-            creating intuitive user experiences and working with modern web
-            technologies.
-          </p>
+      <section className="container flex flex-col min-h-[calc(100vh-12rem)] justify-center mx-auto px-4 py-5 md:py-10">
+        <motion.div variants={container} initial="hidden" animate="show" className="text-center">
+          <motion.h2 variants={item} className="text-xl md:text-2xl text-gray-300 mb-2">
+            Hi, I'm <span className="inline-block animate-bounce">👋</span>
+          </motion.h2>
+          <motion.h1 variants={item} className="text-5xl md:text-8xl font-extrabold my-2">
+            <span className="gradient-text">Alamgir Khan</span>
+          </motion.h1>
+          <motion.p variants={item} className="text-xl md:text-3xl text-gray-200 mb-6 h-10 font-semibold">
+            <Typewriter words={['Full Stack Developer', 'MERN Stack Developer', 'React & Node.js Expert', 'UI Enthusiast']} />
+          </motion.p>
+          <motion.p variants={item} className="max-w-2xl mx-auto text-gray-400 mb-10">
+            I build complete web applications, from pixel-perfect React interfaces to secure Node.js / Express APIs
+            and MongoDB databases. Dashboards, e-commerce, management systems, I ship them end to end.
+          </motion.p>
 
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-            <Link
-              to="/projects"
-              className="group relative inline-flex items-center justify-center w-full sm:w-auto px-8 py-3 text-white font-semibold bg-gray-800 rounded-lg overflow-hidden transition-all duration-300 hover:bg-gray-900 shadow-lg hover:shadow-blue-500/30"
-            >
-              <span className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-              <span className="relative flex items-center gap-2">
-                My Work <FaArrowRight />
-              </span>
+          <motion.div variants={item} className="flex flex-col sm:flex-row justify-center items-center gap-4">
+            <Link to="/projects" className="btn-primary w-full sm:w-auto">
+              My Work <FaArrowRight />
             </Link>
-            <Link
-              onClick={handleShowPDF}
-              className="group relative inline-flex items-center justify-center w-full sm:w-auto px-8 py-3 text-white font-semibold bg-transparent border border-gray-600 rounded-lg overflow-hidden transition-all duration-300 hover:text-white hover:border-blue-500 shadow-lg hover:shadow-purple-500/30"
-            >
-              <span className="absolute top-0 left-0 w-0 h-full bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-500 ease-out group-hover:w-full"></span>
-              <span className="relative flex items-center gap-2">
-                Download CV <FaDownload />
-              </span>
-            </Link>
-          </div>
-        </div>
-      </main>
+            <button onClick={handleShowPDF} className="btn-outline w-full sm:w-auto">
+              Download CV <FaDownload />
+            </button>
+            <a href="https://wa.me/923154572266" target="_blank" rel="noopener noreferrer" className="btn-outline w-full sm:w-auto hover:!border-green-400">
+              WhatsApp <FaWhatsapp className="text-green-400" />
+            </a>
+          </motion.div>
+
+          <motion.div variants={item} className="grid grid-cols-3 gap-3 max-w-xl mx-auto mt-14">
+            {stats.map((s) => (
+              <motion.div key={s.l} whileHover={{ y: -6, scale: 1.05 }} className="glass rounded-2xl py-4">
+                <p className="text-2xl md:text-3xl font-extrabold gradient-text">{s.n}</p>
+                <p className="text-xs md:text-sm text-gray-400 mt-1">{s.l}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.div>
+      </section>
     </>
   );
 }
-

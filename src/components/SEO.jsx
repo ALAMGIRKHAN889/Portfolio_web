@@ -3,8 +3,8 @@ import { Helmet } from 'react-helmet-async';
 const SEO = ({ title, description, keywords, image, url }) => {
   const siteTitle = "Alamgir Khan | Portfolio";
   const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle;
-  const siteDescription = "Portfolio of Alamgir Khan - A Creative Frontend Developer building beautiful and responsive web applications.";
-  const siteKeywords = "Alamgir Khan, Frontend Developer, React Developer, Portfolio, Web Development, UI/UX";
+  const siteDescription = "Portfolio of Alamgir Khan - A Full Stack (MERN) Developer building beautiful, scalable web applications.";
+  const siteKeywords = "Alamgir Khan, Full Stack Developer, MERN Developer, React Developer, Node.js, Portfolio, Web Development, UI/UX";
   const siteUrl = "https://alamgir-portfolio.vercel.app"; // Update with actual URL if known
   const siteImage = "/Logo.png";
 

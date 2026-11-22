@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { SlSocialGithub } from "react-icons/sl";
 import { TiSocialLinkedin } from "react-icons/ti";
-import { FaInstagram, FaWhatsapp } from "react-icons/fa";
+import { FaInstagram, FaWhatsapp, FaDownload } from "react-icons/fa";
 import { MdOutlineLocationOn, MdAttachEmail } from "react-icons/md";
 import { FaPhone } from "react-icons/fa6";
-import { FaDownload } from 'react-icons/fa';
-
+import SEO from '../../components/SEO';
+import { PageTitle, Reveal } from '../../components/Motion';
 
 const socialLinks = [
   { name: 'Email', icon: <MdAttachEmail />, href: 'mailto:alamgirkhqwer@gmail.com?subject=Hello&body=I%20want%20to%20contact%20you' },
@@ -16,88 +17,84 @@ const socialLinks = [
 ];
 
 const contactDetails = [
-    { icon: <MdAttachEmail />, text: 'alamgirkhqwer@gmail.com' },
-    { icon: <FaPhone />, text: '+92 315 4572266' },
-    { icon: <MdOutlineLocationOn />, text: 'Landhi, Karachi.' }
+  { icon: <MdAttachEmail />, text: 'alamgirkhqwer@gmail.com', href: 'mailto:alamgirkhqwer@gmail.com' },
+  { icon: <FaPhone />, text: '+92 315 4572266', href: 'tel:+923154572266' },
+  { icon: <FaWhatsapp />, text: 'WhatsApp: 03154572266', href: 'https://wa.me/923154572266' },
+  { icon: <MdOutlineLocationOn />, text: 'Landhi, Karachi.' }
 ];
 
-
-import SEO from '../../components/SEO';
-
 export default function About() {
-  const handleShowPDF = () => {
-    window.open('/Alamgir CV.pdf', '_blank');
-  };
+  const handleShowPDF = () => window.open('/Alamgir CV.pdf', '_blank');
 
   return (
     <>
-    <SEO 
-      title="About Me" 
-      description="Learn more about Alamgir Khan, a web developer passionate about creating efficient and scalable web solutions using modern frontend technologies." 
-      keywords="About Alamgir Khan, Web Developer Karachi, Frontend Developer Skills"
-    />
-    <main className='container flex flex-col min-h-[calc(100vh-20rem)] justify-center mx-auto px-4 py-5 md:py-10'>
-        <h1 className="text-3xl md:text-4xl font-bold mb-4 2xl:mb-[5%] text-center"> <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500">About Me</span></h1>
+      <SEO
+        title="About Me"
+        description="Learn more about Alamgir Khan, a Full Stack Developer passionate about building efficient and scalable web solutions with the MERN stack."
+        keywords="About Alamgir Khan, Full Stack Developer Karachi, MERN Developer"
+      />
+      <section className="container flex flex-col justify-center mx-auto px-4 py-5 md:py-10">
+        <PageTitle>About Me</PageTitle>
 
-      <div className="grid lg:grid-cols-5 gap-12 lg:gap-20 items-start">
-        
-        <div className="lg:col-span-2 space-y-2">
-          
-          <div className="relative group">
-              <img className='h-[250px] w-full object-cover object-top rounded-2xl p-2' src="/img/about_1.jpg" alt="Alamgir Khan - Web Developer" />
-          </div>
-            
-          <div className="bg-gray-800/50 backdrop-blur-sm border border-blue-500/20 p-6 rounded-lg space-y-4">
-            {contactDetails.map((detail) => (
-              <div key={detail.text} className="flex items-center gap-4 text-gray-300 hover:text-white transition-colors">
-                <div className="text-blue-400 text-2xl">{detail.icon}</div>
-                <span>{detail.text}</span>
-              </div>
-            ))}
-          </div>
+        <div className="grid lg:grid-cols-5 gap-10 lg:gap-16 items-start">
+          <motion.div
+            initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7 }}
+            className="lg:col-span-2 space-y-4"
+          >
+            <div className="relative group">
+              <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-purple-600 to-blue-500 opacity-60 blur group-hover:opacity-100 transition duration-500" />
+              <img className="relative h-[280px] w-full object-cover object-top rounded-2xl" src="/img/about_1.jpg" alt="Alamgir Khan - Full Stack Developer" />
+            </div>
+
+            <div className="glass p-6 rounded-2xl space-y-4">
+              {contactDetails.map((d) => {
+                const Row = d.href ? 'a' : 'div';
+                return (
+                  <Row key={d.text} href={d.href} target={d.href?.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer"
+                    className="flex items-center gap-4 text-gray-300 hover:text-white hover:translate-x-1 transition-all">
+                    <div className="text-blue-400 text-2xl">{d.icon}</div>
+                    <span>{d.text}</span>
+                  </Row>
+                );
+              })}
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.1 }}
+            className="lg:col-span-3 text-center lg:text-left"
+          >
+            <h2 className="text-2xl md:text-3xl font-bold text-blue-400 mb-4">Alamgir Khan - Full Stack Developer</h2>
+            <p className="text-gray-300 mb-4 text-justify leading-relaxed">
+              Deeply curious about technology, I build complete web applications from the database to the
+              user interface. On the frontend I craft responsive, animated interfaces with React, Tailwind CSS
+              and modern JavaScript. On the backend I design REST APIs with Node.js and Express, handle
+              authentication, and model data with MongoDB.
+            </p>
+            <p className="text-gray-300 mb-8 text-justify leading-relaxed">
+              From fee management and property management systems to e-commerce stores and dashboards,
+              I enjoy solving real-world problems with clean, scalable and user-friendly solutions,
+              and I collaborate well with teams.
+            </p>
+
+            <div className="mb-10 flex flex-wrap justify-center lg:justify-start items-center gap-4">
+              {socialLinks.map((link, i) => (
+                <motion.a key={link.name} href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.name}
+                  initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.4 + i * 0.08 }}
+                  whileHover={{ scale: 1.2, rotate: 8 }}
+                  className="p-3 text-2xl rounded-full glass text-gray-300 hover:text-white hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-600/30 transition-colors">
+                  {link.icon}
+                </motion.a>
+              ))}
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <Link to="/contact" className="btn-primary">Contact me</Link>
+              <button onClick={handleShowPDF} className="btn-outline">Download CV <FaDownload /></button>
+            </div>
+          </motion.div>
         </div>
-
-
-        <div className="lg:col-span-3 text-center lg:text-left">
-          <h2 className="text-2xl md:text-3xl font-bold text-blue-400 mb-4">Alamgir Khan - Web Developer</h2>
-          <p className="text-gray-300 mb-8 text-justify leading-relaxed">
-            Deeply curious about technology, I have developed a profound
-            understanding of programming languages, frameworks, and best
-            practices in software development. I derive great satisfaction from
-            solving complex problems and creating user-friendly, efficient, and
-            scalable solutions. My experience includes building seamless user
-            interfaces using HTML, CSS, and JavaScript, and utilizing modern
-            frameworks and libraries to enhance functionality and improve the user
-            experience. Furthermore, I have a strong understanding of responsive
-            design principles and excel in collaborating effectively with teams.
-          </p>
-
-
-          <div className="socials mb-10 flex flex-wrap justify-center lg:justify-start items-center gap-4">
-            {socialLinks.map((link) => (
-              <a key={link.name} href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.name}
-                 className='p-2 text-2xl rounded-full bg-gray-800/80 text-gray-300 hover:text-white hover:bg-blue-600 hover:scale-110 hover:shadow-lg hover:shadow-blue-600/30 transition-all duration-300'>
-                {link.icon}
-              </a>
-            ))}
-          </div>
-
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-            <Link to="/contact"  className="group relative inline-flex items-center justify-center w-full sm:w-auto py-3 px-8 text-white font-semibold bg-gray-800 rounded-lg overflow-hidden transition-all duration-300 hover:bg-gray-900 shadow-lg hover:shadow-blue-500/30"  >
-            <span className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-            <span className="relative flex items-center gap-2"> Contact me
-            </span>
-          </Link>
-            <Link onClick={handleShowPDF} className="group relative inline-flex items-center justify-center w-full sm:w-auto px-8 py-3 text-white font-semibold bg-transparent border border-gray-600 rounded-lg overflow-hidden transition-all duration-300 hover:text-white hover:border-blue-500 shadow-lg hover:shadow-purple-500/30" >
-             <span className="absolute top-0 left-0 w-0 h-full bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-500 ease-out group-hover:w-full"></span>
-             <span  className="relative flex items-center gap-2">  Download CV <FaDownload /></span>
-          </Link>
-          </div>
-        </div>
-      </div>
-    </main>
+      </section>
     </>
   );
 }
-

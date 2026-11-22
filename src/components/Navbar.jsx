@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { NavLink, Link } from 'react-router-dom';
 import { HiMenuAlt3, HiX } from 'react-icons/hi';
 
@@ -21,6 +22,12 @@ const HireMeButton = ({ className = '' }) => (
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const on = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', on);
+    return () => window.removeEventListener('scroll', on);
+  }, []);
 
   const navLinkClasses = ({ isActive }) =>
     `px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ${isActive
@@ -36,8 +43,8 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-4 left-0 right-0 z-50">
-        <div className="w-[90%] max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-2 bg-black/30 backdrop-blur-lg border border-blue-500/30 rounded-full">
+      <motion.nav initial={{ y: -80, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.6 }} className="fixed top-4 left-0 right-0 z-50">
+        <div className={`w-[90%] max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-2 backdrop-blur-lg border border-blue-500/30 rounded-full transition-all duration-300 ${scrolled ? 'bg-black/60 shadow-lg shadow-purple-500/20' : 'bg-black/30'}`}>
           <div className="flex items-center justify-between h-12">
             {/* Logo */}
             <Link to="/" className="flex-shrink-0 text-2xl font-bold text-white">
@@ -68,7 +75,7 @@ export default function Navbar() {
             </div>
           </div>
         </div>
-      </nav>
+      </motion.nav>
 
       {/* Mobile menu overlay */}
       {isOpen && (
